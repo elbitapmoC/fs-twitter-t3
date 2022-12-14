@@ -4,6 +4,7 @@ import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { trpc } from "../utils/trpc";
 import { FaDiscord } from "react-icons/fa";
+import { Timeline } from "../components/Timeline";
 
 const Home: NextPage = () => {
   const { data: session, status } = useSession();
@@ -32,6 +33,7 @@ const Home: NextPage = () => {
               >
                 <span className="flex items-center gap-2">Log Out</span>
               </button>
+              <Timeline />
             </>
           ) : (
             <button

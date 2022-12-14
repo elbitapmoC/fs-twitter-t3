@@ -1,16 +1,9 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "sqlite"
-  // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-  // Further reading:
-  // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-  // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
   url      = env("DATABASE_URL")
 }
 
@@ -49,7 +42,8 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  Tweet         Tweet[]
+  tweet         Tweet[]
+  likes         Like[]
 }
 
 model VerificationToken {
@@ -61,8 +55,23 @@ model VerificationToken {
 }
 
 model Tweet {
-  id       String @id @default(cuid())
-  text     String
-  author   User   @relation(fields: [authorId], references: [id])
-  authorId String
+  id        String   @id @default(cuid())
+  text      String
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  likes     Like[]
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  tweet     Tweet    @relation(fields: [tweetId], references: [id])
+  tweetId   String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([tweetId, userId])
 }
