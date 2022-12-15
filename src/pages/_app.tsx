@@ -6,7 +6,6 @@ import { trpc } from "../utils/trpc";
 
 import "../styles/globals.css";
 import { Container } from "../components/Container";
-import { LoggedOutBanner } from "../components/LoggedOutBanner";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const MyApp: AppType<{ session: Session | null }> = ({
@@ -20,7 +19,6 @@ const MyApp: AppType<{ session: Session | null }> = ({
           <Component {...pageProps} />
         </main>
       </Container>
-      <LoggedOutBanner />
 
       <ReactQueryDevtools initialIsOpen={false} />
     </SessionProvider>

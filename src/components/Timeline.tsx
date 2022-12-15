@@ -144,8 +144,8 @@ function Tweet({
   const hasLiked = tweet.likes.length > 0;
 
   return (
-    <div className="mb-4 border-b-2 border-gray-500">
-      <div className="flex p-2">
+    <div className="mb-4 w-full resize-none rounded border border-b border-gray-400 border-gray-500 p-4 ">
+      <div className="flex items-start p-2">
         {tweet.author.image && (
           <Image
             src={tweet.author.image}
@@ -223,25 +223,25 @@ export function Timeline({
   }, [scrollPosition, hasNextPage, isFetching, fetchNextPage]);
 
   return (
-    <div>
+    <>
       <CreateTweet />
-      <div className="border-l-2 border-r-2 border-t-2 border-gray-500">
-        {tweets.map((tweet) => {
-          return (
-            <Tweet
-              key={tweet.id}
-              tweet={tweet}
-              client={client}
-              input={{
-                where,
-                limit: LIMIT,
-              }}
-            />
-          );
-        })}
+      {tweets.map((tweet) => {
+        return (
+          <Tweet
+            key={tweet.id}
+            tweet={tweet}
+            client={client}
+            input={{
+              where,
+              limit: LIMIT,
+            }}
+          />
+        );
+      })}
 
-        {!hasNextPage && <p>No more items to load</p>}
-      </div>
-    </div>
+      {!hasNextPage && (
+        <p className="text-center">We&apos;ve reached the end of the road 🚧</p>
+      )}
+    </>
   );
 }

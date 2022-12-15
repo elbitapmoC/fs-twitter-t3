@@ -1,6 +1,7 @@
 import { FormEventHandler, useState } from "react";
 import { object, string } from "zod";
 import { trpc } from "../utils/trpc";
+import { FaTwitter } from "react-icons/fa";
 
 export const tweetSchema = object({
   text: string({
@@ -23,12 +24,12 @@ export function CreateTweet() {
     },
   });
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: any) {
     e.preventDefault();
 
     try {
       await tweetSchema.parse({ text });
-    } catch (e) {
+    } catch (e: any) {
       setError(e.message);
       return;
     }
@@ -41,21 +42,24 @@ export function CreateTweet() {
       {error && JSON.stringify(error)}
       <form
         onSubmit={handleSubmit}
-        className="mb-4 flex w-full flex-col rounded-md border-2 p-4"
+        className="mt-8 flex w-full flex-col rounded-md"
       >
         <textarea
-          className="w-full p-4 shadow"
+          placeholder="What's happening?"
+          className="w-full resize-none rounded border border-gray-400 p-4 shadow"
           onChange={(e) => setText(e.target.value)}
         />
 
-        <div className="mt-4 flex justify-end">
+        <aside className="mt-4 mb-12 flex justify-end">
           <button
-            className="bg-primary rounded-md px-4 py-2 text-white"
+            className="rounded-md bg-sky-400 px-4 py-2 text-white"
             type="submit"
           >
-            Tweet
+            <span className="flex items-center gap-2">
+              <FaTwitter /> Tweet
+            </span>
           </button>
-        </div>
+        </aside>
       </form>
     </>
   );
